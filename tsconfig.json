@@ -2,7 +2,7 @@
 	"compilerOptions": {
 		"target": "ES2017",
 		"module": "CommonJS",
-		"outDir": "dist",
+		"outDir": "./dist/",
 		"strict": true,
 		"noUnusedLocals": true,
 		"noEmitOnError": true,
