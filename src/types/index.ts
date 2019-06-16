@@ -5,6 +5,7 @@ export enum CommandKind {
 	DumpLogs = 'dumpLogs',
 	DuplicateTab = 'duplicateTab',
 	GoBack = 'goBack',
+	GoForward = 'goForward',
 }
 
 export interface Command {
