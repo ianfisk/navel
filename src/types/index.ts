@@ -6,6 +6,7 @@ export enum CommandKind {
 	DuplicateTab = 'duplicateTab',
 	GoBack = 'goBack',
 	GoForward = 'goForward',
+	ScrollDown = 'scrollDown',
 }
 
 export interface Command {

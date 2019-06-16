@@ -12,4 +12,5 @@ export const defaultKeyMappings: { [key: string]: CommandConstructor } = {
 	d: commands.DuplicateTabCommand,
 	b: commands.GoBackCommand,
 	f: commands.GoForwardCommand,
+	j: commands.ScrollDownCommand,
 };
