@@ -1,7 +1,4 @@
 import { BackgroundScriptCommandHandler, OpenInNewTabBackgroundScriptCommand } from '../../types';
-import { logger } from '../../util/logger';
-
-const { log } = logger.create('Bg_OpenInNewTabHandler');
 
 export class OpenInNewTabHandler
 	implements BackgroundScriptCommandHandler<OpenInNewTabBackgroundScriptCommand> {
@@ -10,7 +7,6 @@ export class OpenInNewTabHandler
 			data: { href },
 		} = command;
 
-		log(`Creating new tab with href: ${href}`);
 		chrome.tabs.create({
 			url: href,
 			active: true,

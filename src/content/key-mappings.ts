@@ -9,4 +9,5 @@ interface CommandConstructor {
 export const defaultKeyMappings: { [key: string]: CommandConstructor } = {
 	l: commands.HighlightLinksCommand,
 	p: commands.DumpLogsCommand,
+	d: commands.DuplicateTabCommand,
 };

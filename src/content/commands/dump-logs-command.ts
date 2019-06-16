@@ -6,6 +6,5 @@ export class DumpLogsCommand implements Command {
 
 	execute() {
 		logger.dumpLogs();
-		return Promise.resolve();
 	}
 }
