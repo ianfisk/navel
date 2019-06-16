@@ -13,4 +13,5 @@ export const defaultKeyMappings: { [key: string]: CommandConstructor } = {
 	b: commands.GoBackCommand,
 	f: commands.GoForwardCommand,
 	j: commands.ScrollDownCommand,
+	k: commands.ScrollUpCommand,
 };

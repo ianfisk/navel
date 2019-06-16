@@ -6,15 +6,11 @@ import {
 	Command,
 	BackgroundScriptCommandKind,
 	OpenInNewTabBackgroundScriptCommand,
+	ClickableElementEntry,
 } from '../../types';
 import { DeferredPromise } from '../../util/deferred-promise';
+import { getVisibleClickableElements, isAnchorElement } from '../../util/dom-utils';
 import { logger } from '../../util/logger';
-import { isBooleanAttributeSet, isHiddenOrDisabled, isAnchorElement } from '../../util/dom-utils';
-
-interface ClickableElementEntry {
-	element: Element;
-	boundingRect: ClientRect;
-}
 
 interface Annotation {
 	label: string;
@@ -28,8 +24,6 @@ interface ActivateAnnotationRequest {
 }
 
 const { log } = logger.create('HighlightLinksCommand');
-const clickableRoles = ['button', 'link', 'tab'];
-const nativelyClickableElements = ['a', 'button', 'link', 'input', 'textarea', 'select'];
 const linkAnnotationCharacters = 'sadfjklewcmpgh'.split(''); // use the same set as Vimium
 
 export class HighlightLinksCommand implements Command {
@@ -45,7 +39,7 @@ export class HighlightLinksCommand implements Command {
 		const clickableElements = await getVisibleClickableElements();
 		log(`Found ${clickableElements.size} visible clickable elements.`);
 
-		if (!ct || !ct.isCancellationRequested) {
+		if ((!ct || !ct.isCancellationRequested) && clickableElements.size) {
 			this.annotateElements(clickableElements);
 
 			const selectedAnnotation = await this.waitForAnnotationSelection(ct);
@@ -237,38 +231,6 @@ function createAnnotationElement(boundingRect: ClientRect, label: string) {
 	});
 
 	return annotationElement;
-}
-
-function getVisibleClickableElements(): Promise<Set<ClickableElementEntry>> {
-	const elements = Array.from(document.getElementsByTagName('*'));
-	const clickableElements = elements.filter(element => {
-		const role = (element.getAttribute('role') || '').toLowerCase();
-		const isClickable =
-			nativelyClickableElements.indexOf(element.tagName.toLowerCase()) !== -1 ||
-			element.hasAttribute('onclick') ||
-			isBooleanAttributeSet(element, 'contentEditable') ||
-			clickableRoles.indexOf(role) !== -1;
-
-		return !isHiddenOrDisabled(element) && isClickable;
-	});
-
-	const visibleElementsPromise = new DeferredPromise<Set<ClickableElementEntry>>();
-	const intersectionObserver = new IntersectionObserver(
-		entries => {
-			const visibleElements = new Set<ClickableElementEntry>(
-				entries
-					.filter(entry => entry.isIntersecting)
-					.map(entry => ({ element: entry.target, boundingRect: entry.boundingClientRect }))
-			);
-
-			visibleElementsPromise.resolve(visibleElements);
-			intersectionObserver.disconnect();
-		},
-		{ root: null } // intersection with the viewport
-	);
-	clickableElements.forEach(e => intersectionObserver.observe(e));
-
-	return visibleElementsPromise.promise;
 }
 
 function getAnnotationLabels(minimumCount: number): string[] {

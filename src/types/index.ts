@@ -7,6 +7,7 @@ export enum CommandKind {
 	GoBack = 'goBack',
 	GoForward = 'goForward',
 	ScrollDown = 'scrollDown',
+	ScrollUp = 'scrollUp',
 }
 
 export interface Command {
@@ -32,4 +33,9 @@ export interface OpenInNewTabBackgroundScriptCommand extends BackgroundScriptCom
 
 export interface BackgroundScriptCommandHandler<T extends BackgroundScriptCommand> {
 	execute(command: T, sender: chrome.runtime.MessageSender): void;
+}
+
+export interface ClickableElementEntry {
+	element: Element;
+	boundingRect: ClientRect;
 }
