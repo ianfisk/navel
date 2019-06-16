@@ -219,7 +219,7 @@ function createAnnotationElement(boundingRect: ClientRect, label: string) {
 			 font-weight: bold;
 			 overflow: hidden;
 			 padding: 1px 3px 0px;
-			 position: absolute;
+			 position: fixed;
 			 white-space: nowrap;
 			 z-index: 9999999;
 		 `;
