@@ -75,19 +75,22 @@ export class HighlightLinksCommand implements Command {
 	 */
 	private annotateElements(clickableElements: Set<ClickableElementEntry>): void {
 		const annotationLabels = getAnnotationLabels(clickableElements.size);
+		const fragment = document.createDocumentFragment();
 
 		let i = 0;
 		for (const { element: targetElement, boundingRect } of clickableElements.values()) {
 			const label = annotationLabels[i++];
 			const annotationElement = createAnnotationElement(boundingRect, label);
 
-			document.body.appendChild(annotationElement);
+			fragment.appendChild(annotationElement);
 			this.annotations.set(label, {
 				label,
 				annotationElement,
 				targetElement: targetElement as HTMLElement,
 			});
 		}
+
+		document.body.appendChild(fragment);
 	}
 
 	private waitForAnnotationSelection(
