@@ -24,6 +24,7 @@ interface ActivateAnnotationRequest {
 }
 
 const { log } = logger.create('HighlightLinksCommand');
+const annotationStyleClassName = '_navel-annotation';
 const linkAnnotationCharacters = 'sadfjklewcmpgh'.split(''); // use the same set as Vimium
 
 export class HighlightLinksCommand implements Command {
@@ -205,23 +206,10 @@ export class HighlightLinksCommand implements Command {
 function createAnnotationElement(boundingRect: ClientRect, label: string) {
 	const annotationElement = document.createElement('div');
 
+	annotationElement.className = annotationStyleClassName;
 	annotationElement.style.cssText = `
 			 top: ${boundingRect.top}px;
 			 left: ${boundingRect.left}px;
-			 background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgb(255, 247, 133)), to(rgb(255, 197, 66)));
-			 border-color: rgb(227, 190, 35);
-			 border-image: initial;
-			 border-radius: 3px;
-			 border-style: solid;
-			 border-width: 1px;
-			 box-shadow: rgba(0, 0, 0, 0.3) 0px 3px 7px 0px;
-			 font-size: 12px;
-			 font-weight: bold;
-			 overflow: hidden;
-			 padding: 1px 3px 0px;
-			 position: fixed;
-			 white-space: nowrap;
-			 z-index: 9999999;
 		 `;
 
 	label.split('').forEach(labelChar => {
