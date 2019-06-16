@@ -97,12 +97,21 @@ export class HighlightLinksCommand implements Command {
 		ct?: CancellationToken
 	): Promise<ActivateAnnotationRequest | null> {
 		const donePromise = new DeferredPromise<ActivateAnnotationRequest | null>();
+		let unregisterTokenListener: () => void | undefined;
 		if (ct) {
-			ct.register(() => {
+			unregisterTokenListener = ct.register(() => {
 				log('Canceling highlight links command because token has been canceled.');
 				donePromise.resolve(null);
 			});
 		}
+
+		const doExit = (results: ActivateAnnotationRequest | null) => {
+			if (unregisterTokenListener) {
+				unregisterTokenListener();
+			}
+
+			donePromise.resolve(results);
+		};
 
 		// suppress keydown events in our special input so no other commands are invoked
 		fromEvent<KeyboardEvent>(document, 'keydown')
@@ -124,7 +133,7 @@ export class HighlightLinksCommand implements Command {
 				switch (lowerCaseKey) {
 					case 'escape':
 						log('Escape entered in highlight links command.');
-						donePromise.resolve(null);
+						doExit(null);
 						return;
 
 					case 'backspace':
@@ -142,7 +151,7 @@ export class HighlightLinksCommand implements Command {
 
 						const annotation = this.annotations.get(this.currentInput);
 						if (annotation) {
-							donePromise.resolve({
+							doExit({
 								annotation,
 								shouldOpenInNewTab: event.shiftKey,
 							});
@@ -159,7 +168,13 @@ export class HighlightLinksCommand implements Command {
 			.pipe(takeUntil(this.stopKeyListener$))
 			.subscribe(() => {
 				log('Canceling highlight links command because of document click.');
-				donePromise.resolve(null);
+				doExit(null);
+			});
+		fromEvent(document, 'scroll')
+			.pipe(takeUntil(this.stopKeyListener$))
+			.subscribe(() => {
+				log('Canceling highlight links command because of document scroll.');
+				doExit(null);
 			});
 
 		return donePromise.promise;
