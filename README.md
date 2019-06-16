@@ -1,4 +1,4 @@
-# navel
+# 🍊 navel
 
 A Vimium-like chrome extension personalized to my wants and desires. Currently supported commands include:
 
