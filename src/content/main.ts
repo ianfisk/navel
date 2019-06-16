@@ -13,6 +13,8 @@ function main() {
 			return;
 		}
 
+		log(`Looking for command for key ${event.key}.`);
+
 		const commandConstructor = defaultKeyMappings[event.key];
 		if (commandConstructor) {
 			activeCommandCts.cancel();

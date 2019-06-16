@@ -1,1 +1,2 @@
-export { HighlightLinksCommand } from './highlight-links-command';
+export * from './highlight-links-command';
+export * from './dump-logs-command';

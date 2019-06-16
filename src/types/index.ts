@@ -2,6 +2,7 @@ import { CancellationToken } from 'poli-c';
 
 export enum CommandKind {
 	HighlighLinks = 'highlightLinks',
+	DumpLogs = 'dumpLogs',
 }
 
 export interface Command {

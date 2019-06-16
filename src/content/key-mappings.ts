@@ -8,4 +8,5 @@ interface CommandConstructor {
 // Note: all shortcuts must use the ctrl key as well.
 export const defaultKeyMappings: { [key: string]: CommandConstructor } = {
 	l: commands.HighlightLinksCommand,
+	p: commands.DumpLogsCommand,
 };

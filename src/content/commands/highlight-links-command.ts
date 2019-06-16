@@ -58,7 +58,7 @@ export class HighlightLinksCommand implements Command {
 	}
 
 	private cleanupDomAndStopListeners(): void {
-		log('Deactivating highligh links command.');
+		log('Deactivating highlight links command.');
 
 		this.stopKeyListener$.next();
 		for (const { annotationElement } of this.annotations.values()) {
@@ -157,10 +157,12 @@ export class HighlightLinksCommand implements Command {
 			});
 
 		// exit the command if the user interacts with the page
-		fromEvent(document, 'click').subscribe(() => {
-			log('Canceling highlight links command because of document click.');
-			donePromise.resolve(null);
-		});
+		fromEvent(document, 'click')
+			.pipe(takeUntil(this.stopKeyListener$))
+			.subscribe(() => {
+				log('Canceling highlight links command because of document click.');
+				donePromise.resolve(null);
+			});
 
 		return donePromise.promise;
 	}
