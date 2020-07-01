@@ -80,6 +80,8 @@ export class HighlightLinksCommand implements Command {
 		let i = 0;
 		for (const { element: targetElement, boundingRect } of clickableElements.values()) {
 			const label = annotationLabels[i++];
+			if (!label) continue;
+
 			const annotationElement = createAnnotationElement(boundingRect, label);
 
 			fragment.appendChild(annotationElement);

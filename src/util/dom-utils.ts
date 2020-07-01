@@ -1,5 +1,5 @@
-import { DeferredPromise } from './deferred-promise';
 import { ClickableElementEntry } from '../types';
+import { DeferredPromise } from './deferred-promise';
 
 const clickableRoles = ['button', 'link', 'tab'];
 const nativelyClickableElements = ['a', 'button', 'link', 'input', 'textarea', 'select'];
@@ -55,5 +55,19 @@ export function isBooleanAttributeSet(element: Element, attrName: string) {
 		element.hasAttribute(attrName) &&
 		(element.getAttribute(attrName) === '' ||
 			element.getAttribute(attrName)!.toLowerCase() === 'true')
+	);
+}
+
+export function isScrollable(element: Element | null): boolean {
+	if (!element) {
+		return false;
+	}
+
+	const computedStyle = window.getComputedStyle(element);
+	return (
+		computedStyle.overflow === 'auto' ||
+		computedStyle.overflow === 'scroll' ||
+		computedStyle.overflowY === 'auto' ||
+		computedStyle.overflowY === 'scroll'
 	);
 }
