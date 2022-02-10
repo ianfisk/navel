@@ -10,7 +10,7 @@ const { log } = logger.create('ContentScript');
 async function isDisabledSite(): Promise<boolean> {
 	const { disabledSiteRegexs } = await getExtensionOptions();
 
-	return disabledSiteRegexs.some(disabledSiteRegex => {
+	return disabledSiteRegexs.some((disabledSiteRegex) => {
 		try {
 			log(`Checking if current site matches ${disabledSiteRegex}`);
 
