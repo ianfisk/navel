@@ -1,7 +1,8 @@
 import { BackgroundScriptCommandHandler, MoveTabBackgroundScriptCommand } from '../../types';
 
 export class MoveTabHandler
-	implements BackgroundScriptCommandHandler<MoveTabBackgroundScriptCommand> {
+	implements BackgroundScriptCommandHandler<MoveTabBackgroundScriptCommand>
+{
 	execute(command: MoveTabBackgroundScriptCommand, sender: chrome.runtime.MessageSender) {
 		const {
 			data: { direction },

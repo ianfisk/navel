@@ -10,7 +10,7 @@ function main() {
 	let activeCommandCts = new CancellationTokenSource();
 
 	fromEvent<KeyboardEvent>(document, 'keydown')
-		.pipe(filter(event => event.ctrlKey && event.key !== 'Control'))
+		.pipe(filter((event) => event.ctrlKey && event.key !== 'Control'))
 		.subscribe((event: KeyboardEvent) => {
 			log(`Looking for command for key ${event.key}.`);
 

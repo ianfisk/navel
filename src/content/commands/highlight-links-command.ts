@@ -118,8 +118,8 @@ export class HighlightLinksCommand implements Command {
 		// suppress keydown events in our special input so no other commands are invoked
 		fromEvent<KeyboardEvent>(document, 'keydown')
 			.pipe(
-				filter(event => !(event.metaKey || event.ctrlKey)),
-				map(event => ({ event, lowerCaseKey: event.key.toLowerCase() })),
+				filter((event) => !(event.metaKey || event.ctrlKey)),
+				map((event) => ({ event, lowerCaseKey: event.key.toLowerCase() })),
 				filter(
 					({ lowerCaseKey }) =>
 						lowerCaseKey === 'escape' ||
@@ -232,7 +232,7 @@ function createAnnotationElement(boundingRect: ClientRect, label: string) {
 			 left: ${boundingRect.left}px;
 		 `;
 
-	label.split('').forEach(labelChar => {
+	label.split('').forEach((labelChar) => {
 		const characterSpan = document.createElement('span');
 		characterSpan.textContent = labelChar.toUpperCase();
 		annotationElement.appendChild(characterSpan);

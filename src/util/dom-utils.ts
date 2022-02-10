@@ -6,7 +6,7 @@ const nativelyClickableElements = ['a', 'button', 'link', 'input', 'textarea', '
 
 export function getVisibleClickableElements(): Promise<Set<ClickableElementEntry>> {
 	const elements = Array.from(document.getElementsByTagName('*'));
-	const clickableElements = elements.filter(element => {
+	const clickableElements = elements.filter((element) => {
 		const role = (element.getAttribute('role') || '').toLowerCase();
 		const isClickable =
 			nativelyClickableElements.indexOf(element.tagName.toLowerCase()) !== -1 ||
@@ -19,11 +19,11 @@ export function getVisibleClickableElements(): Promise<Set<ClickableElementEntry
 
 	const visibleElementsPromise = new DeferredPromise<Set<ClickableElementEntry>>();
 	const intersectionObserver = new IntersectionObserver(
-		entries => {
+		(entries) => {
 			const visibleElements = new Set<ClickableElementEntry>(
 				entries
-					.filter(entry => entry.isIntersecting)
-					.map(entry => ({ element: entry.target, boundingRect: entry.boundingClientRect }))
+					.filter((entry) => entry.isIntersecting)
+					.map((entry) => ({ element: entry.target, boundingRect: entry.boundingClientRect }))
 			);
 
 			visibleElementsPromise.resolve(visibleElements);
@@ -31,7 +31,7 @@ export function getVisibleClickableElements(): Promise<Set<ClickableElementEntry
 		},
 		{ root: null } // intersection with the viewport
 	);
-	clickableElements.forEach(e => intersectionObserver.observe(e));
+	clickableElements.forEach((e) => intersectionObserver.observe(e));
 
 	return visibleElementsPromise.promise;
 }
