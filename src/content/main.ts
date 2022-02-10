@@ -14,13 +14,20 @@ function main() {
 		.subscribe((event: KeyboardEvent) => {
 			log(`Looking for command for key ${event.key}.`);
 
-			const commandConstructor = defaultKeyMappings[event.key];
-			if (commandConstructor) {
+			const commandConfig = defaultKeyMappings[event.key];
+			if (commandConfig) {
+				const { ctor: commandCtor, requiresShift } = commandConfig;
+				if (requiresShift && !event.shiftKey) {
+					// Potentially reachable for certain keys (if Apple didn't hijack ctrl+ArrowLeft, e.g.).
+					log(`Command found for ${event.key} but required shift modifier is missing`);
+					return;
+				}
+
 				activeCommandCts.cancel();
 				activeCommandCts.dispose();
 				activeCommandCts = new CancellationTokenSource();
 
-				const command = new commandConstructor();
+				const command = new commandCtor();
 				log(`Command ${command.kind} requested.`);
 
 				command.execute(activeCommandCts.token);

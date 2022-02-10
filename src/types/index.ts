@@ -8,6 +8,8 @@ export enum CommandKind {
 	GoForward = 'goForward',
 	ScrollDown = 'scrollDown',
 	ScrollUp = 'scrollUp',
+	MoveTabLeft = 'moveTabLeft',
+	MoveTabRight = 'moveTabRight',
 }
 
 export interface Command {
@@ -18,6 +20,7 @@ export interface Command {
 export enum BackgroundScriptCommandKind {
 	OpenInNewTab = 'openInNewTab',
 	DuplicateTab = 'duplicateTab',
+	MoveTab = 'moveTab',
 }
 
 export interface BackgroundScriptCommand {
@@ -28,6 +31,13 @@ export interface OpenInNewTabBackgroundScriptCommand extends BackgroundScriptCom
 	kind: BackgroundScriptCommandKind.OpenInNewTab;
 	data: {
 		href: string;
+	};
+}
+
+export interface MoveTabBackgroundScriptCommand extends BackgroundScriptCommand {
+	kind: BackgroundScriptCommandKind.MoveTab;
+	data: {
+		direction: 'left' | 'right';
 	};
 }
 
