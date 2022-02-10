@@ -49,3 +49,7 @@ export interface ClickableElementEntry {
 	element: Element;
 	boundingRect: ClientRect;
 }
+
+export interface ExtensionOptions {
+	disabledSiteRegexs: string[];
+}

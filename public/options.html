@@ -1,0 +1,46 @@
+<html>
+	 <head>
+			<meta charset="UTF-8">
+			<title>Navel Options</title>
+			<style>
+				body {
+					padding: 2px;
+					min-width: 380px;
+				 }
+				 .option {
+					 border: initial;
+					 padding: 12px;
+				 }
+				 .option-title {
+					margin-bottom: 8px;
+					font-weight: bold;
+					font-size: 30px;
+				 }
+				.options-textarea {
+					margin-bottom: 2px;
+					margin-top: 2px;
+					width: 400px;
+					min-height: 100px;
+				}
+				#save-button {
+					margin-left: 12px;
+					margin-right: 4px;
+					margin-bottom: 12px;
+				}
+			</style>
+	 </head>
+	 <body>
+			<fieldset class="option">
+					<legend class="option-title">Disabled sites</legend>
+					<div>
+						<textarea id="disabled-sites" class="options-textarea" placeholder="^https?://.+\.github\.io"></textarea>
+						<div>Add a RegExp on a new line for each site you do not want Navel to run on.</div>
+					</div>
+			</fieldset>
+
+			<button id="save-button">Save</button>
+			<span id="status"></span>
+
+			<script src="/options.js"></script>
+	 </body>
+</html>

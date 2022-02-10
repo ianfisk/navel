@@ -1,12 +1,34 @@
 import { CancellationTokenSource } from 'poli-c';
 import { fromEvent } from 'rxjs';
 import { filter } from 'rxjs/operators';
+import { getExtensionOptions } from '../options';
 import { logger } from '../util/logger';
 import { defaultKeyMappings } from './key-mappings';
 
 const { log } = logger.create('ContentScript');
 
-function main() {
+async function isDisabledSite(): Promise<boolean> {
+	const { disabledSiteRegexs } = await getExtensionOptions();
+
+	return disabledSiteRegexs.some(disabledSiteRegex => {
+		try {
+			log(`Checking if current site matches ${disabledSiteRegex}`);
+
+			var re = new RegExp(disabledSiteRegex);
+			return re.test(location.href);
+		} catch (e) {
+			log(`Caught exception when checking disabled sites: `, disabledSiteRegex, e);
+			return false;
+		}
+	});
+}
+
+async function main() {
+	if (await isDisabledSite()) {
+		log(`Navel is disabled for this site. Exiting.`);
+		return;
+	}
+
 	let activeCommandCts = new CancellationTokenSource();
 
 	fromEvent<KeyboardEvent>(document, 'keydown')

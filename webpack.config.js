@@ -6,6 +6,7 @@ module.exports = {
 	devtool: 'inline-cheap-module-source-map', // so webpack doesn't use eval() in development
 	entry: {
 		content: './src/content/main.ts',
+		options: './src/options/index.ts',
 		background: './src/background/index.ts',
 	},
 	module: {
