@@ -1,4 +1,4 @@
-type Resolve<T> = (value?: T | PromiseLike<T> | undefined) => void;
+type Resolve<T> = (value: T | PromiseLike<T>) => void;
 type Reject = (reason?: any) => void;
 
 export class DeferredPromise<T> {
