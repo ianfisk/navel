@@ -26,6 +26,14 @@ Scroll down just the right amount.
 
 Scroll up just the right amount.
 
+`ctrl+shift+right arrow`
+
+Move the current tab right in the window.
+
+`ctrl+shift+left arrow`
+
+Move the current tab left in the window.
+
 ## FAQ
 
 ### Why is it called navel?
