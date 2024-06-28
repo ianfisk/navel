@@ -1,5 +1,5 @@
 const path = require('path');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
 	mode: process.env.NODE_ENV === 'development' ? 'development' : 'production',
@@ -26,5 +26,5 @@ module.exports = {
 		path: path.resolve(__dirname, 'dist'),
 	},
 
-	plugins: [new CopyWebpackPlugin([{ from: './public/*', flatten: true }])],
+	plugins: [new CopyPlugin({ patterns: [{ from: './public/*', to: "[name][ext]" }] })],
 };
