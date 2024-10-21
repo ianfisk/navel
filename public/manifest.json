@@ -1,15 +1,14 @@
 {
-	"manifest_version": 2,
+	"manifest_version": 3,
 	"name": "Navel",
 	"version": "0.0.1",
 	"description": "A simple navigation extension for chrome.",
-	"browser_action": {
+	"action": {
 		"default_icon": "icon.png"
 	},
 
 	"background": {
-		"scripts": ["background.js"],
-		"persistent": false
+		"service_worker": "background.js"
 	},
 
 	"content_scripts": [{
